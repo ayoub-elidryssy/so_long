@@ -6,7 +6,7 @@
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:45:55 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/26 10:07:26 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/27 10:06:11 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	put_p(t_gam *gam, int x, int y, int k)
 {
 	if (k == 'N')
-		mlx_put_image_to_window(gam->mlx, gam->win, gam->p.p_n, x, y);
+		mlx_put_image_to_window(gam->mlx, gam->win, gam->p.p_d, x, y);
 	if (k == 'R' && gam->b[1] != 1 && gam->b[1] != 2)
 		mlx_put_image_to_window(gam->mlx, gam->win, gam->p.p1_r, x, y);
 	if (k == 'R' && gam->b[1] == 1)
@@ -97,7 +97,7 @@ void	plyr_movs(t_gam *gam, int x, int y, int s)
 	if (gam->map[y][x] == 'e')
 		print_str("YOU WIN\n");
 	if (gam->map[y][x] == 'A')
-		print_str("YOU LOST");
+		print_str("YOU LOST\n");
 	if (s == 0 || s == 1)
 	{
 		if (gam->b[s] == 3)
@@ -117,7 +117,7 @@ void	plyr_movs(t_gam *gam, int x, int y, int s)
 int	a_event(int k, t_gam *gam)
 {
 	if (k == 53)
-		exit (0);
+		print_str("YOU ARE EXIT FROM THE GAME\n");
 	if (!a_sersh(gam->map, 'P', &gam->p.y, &gam->p.x))
 		return (0);
 	if ((k == 123 || k == 0) && gam->map[gam->p.y][gam->p.x - 1] != 'E'

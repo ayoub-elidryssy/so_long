@@ -6,7 +6,7 @@
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:53:36 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/25 06:18:10 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/27 09:07:24 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ char	**spl(char const *s, char c)
 
 int	ft_exit(void)
 {
-	exit(0);
+	print_str("YOU ARE EXIT FROM THE GAME\n");
+	return (0);
 }

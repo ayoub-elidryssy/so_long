@@ -6,7 +6,7 @@
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:58:12 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/26 08:40:40 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/28 08:15:57 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_gam
 	void	*mlx;
 	void	*win;
 	char	**map;
+	char	**map1;
 	t_plyr	p;
 	t_imge	img;
 	t_enmy	*a;
@@ -80,6 +81,7 @@ typedef struct s_gam
 
 void	anim_of_enemy(t_gam *gam, int x, int y, int n);
 int		a_sersh(char **map, char c, int *x, int *y);
+int		valid_path(t_gam *gam, int x, int y, int n);
 void	flod_fill(char **map, int x, int y, int n);
 void	enmy_movs(t_gam *gam, int x, int y, int c);
 int		check_characters(t_gam *gam, int x, int y);
@@ -87,18 +89,18 @@ int		put_img(t_gam *gam, int x, int y, int k);
 void	anim_of_sheep(t_gam *gam, int x, int y);
 void	a_xpm_to_imge(t_gam *gam, int x, int y);
 int		put_p(t_gam *gam, int x, int y, int k);
+int		check_enmy(t_gam *gam, int x, int y);
 void	add_enmy(t_gam *gam, int y, int x);
 void	enmy_pos(t_gam *gam, int y, int x);
 void	you_lose(t_gam *gam, int x, int y);
 void	sw1_img(t_gam *gam, int k, int c);
+int		check_map(t_gam *gam, char *p);
 int		a_sersh_n(char **map, char c);
-int		valid_path(t_gam *gam, int n);
 char	**spl(char const *s, char c);
 void	print_numbr(int x, int x1);
 int		a_event(int k, t_gam *gam);
 void	ft_itoa(int n, char *p);
 int		a_animation(t_gam *gam);
-int		check_map(char *p);
 void	print_error(int x);
 size_t	arg_lent(char **p);
 void	print_str(char *s);

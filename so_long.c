@@ -6,7 +6,7 @@
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:42:55 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/26 09:12:43 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/28 08:10:52 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	std_gam(t_gam *gam)
 			if (gam->map[y][x] != 'P')
 				put_img(gam, x * 70, y * 70, gam->map[y][x]);
 			if (gam->map[y][x] == 'P')
-				put_p(gam, x * 70, y * 70, 'R');
+				put_p(gam, x * 70, y * 70, 'N');
 			x++;
 		}
 		y++;
@@ -36,25 +36,29 @@ void	std_gam(t_gam *gam)
 void	read_map(t_gam *gam, char *s, int fd)
 {
 	char	*p;
+	int		x;
 
+	x = 0;
 	if (!s)
 		print_str("no agrement\n");
+	while (s[x])
+		x++;
+	x--;
 	fd = open(s, O_RDONLY);
 	if (fd == -1)
 	{
 		perror(s);
 		exit (0);
 	}
+	if (x < 4 || s[x] != 'r' || s[x - 1] != 'e' || s[x - 2] != 'b'
+		|| s[x - 3] != '.' || s[x - 4] == '/')
+		print_str("invalid file_name\n");
 	p = get_next_line(fd);
 	if (!p)
-	{
-		write(1, "file is empty\n", 14);
-		exit (0);
-	}
+		print_str("file is empty\n");
 	gam->map = spl(p, '\n');
-	print_error(check_map(p));
+	print_error(check_map(gam, p));
 	free(p);
-	return ;
 }
 
 int	main(int a, char **av)

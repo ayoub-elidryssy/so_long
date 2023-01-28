@@ -6,7 +6,7 @@
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:14:18 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/26 09:07:27 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/28 08:11:21 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,30 @@ int	comp_str(char *s)
 	return (1);
 }
 
-int	valid_map(t_gam *gam, int n)
+int	valid_map(t_gam *gam, int n, int x, int y)
 {
-	int	x;
-	int	y;
-
-	y = a_lent(gam->map[0]) - 1;
-	x = 0;
-	if (!comp_str(gam->map[0]) || !comp_str(gam->map[n - 1]))
+	y = a_lent(gam->map1[0]) - 1;
+	if (!comp_str(gam->map1[0]) || !comp_str(gam->map1[n - 1]))
 		return (3);
-	while (gam->map[x])
+	while (gam->map1[x])
 	{
-		if (gam->map[x][0] != '1' || gam->map[x][y] != '1')
+		if (gam->map1[x][0] != '1' || gam->map1[x][y] != '1')
 			return (3);
 		x++;
 	}
-	if (a_sersh_n(gam->map, 'C') == 0)
+	if (!check_characters(gam, 0, 0))
+		return (6);
+	if (a_sersh_n(gam->map1, 'P') == 0)
+		return (-1);
+	if (a_sersh_n(gam->map1, 'P') > 1)
+		return (-2);
+	if (a_sersh_n(gam->map1, 'C') == 0)
 		return (-3);
-	if (!a_sersh_n(gam->map, 'E'))
+	if (!a_sersh_n(gam->map1, 'E'))
 		return (4);
-	if (a_sersh_n(gam->map, 'E') > 1)
+	if (a_sersh_n(gam->map1, 'E') > 1)
 		return (-4);
-	return (valid_path(gam, arg_lent(gam->map)));
+	return (valid_path(gam, 0, 0, arg_lent(gam->map1)));
 }
 
 int	check_new_line(char *p)
@@ -87,24 +89,22 @@ int	check_new_line(char *p)
 	return (1);
 }
 
-int	check_map(char *p)
+int	check_map(t_gam *gam, char *p)
 {
 	int		n;
-	t_gam	gam;
 
 	n = -1;
-	gam.map = spl(p, '\n');
-	if (!gam.map)
-		return (5);
+	gam->map1 = spl(p, '\n');
+	if (!gam->map1)
+	{
+		write (1, "Error\n", 6);
+		exit (0);
+	}
 	if (!check_new_line(p))
 		return (0);
-	if (a_sersh_n(gam.map, 'P') == 0)
-		return (-1);
-	if (a_sersh_n(gam.map, 'P') > 1)
-		return (-2);
-	if (comp_tab(NULL, gam.map, arg_lent(gam.map)) != 1)
+	if (comp_tab(NULL, gam->map1, arg_lent(gam->map1)) != 1)
 		return (2);
-	if (!check_characters(&gam, 0, 0))
-		return (6);
-	return (valid_map(&gam, arg_lent(gam.map)));
+	if (arg_lent(gam->map1) < 3)
+		return (2);
+	return (valid_map(gam, arg_lent(gam->map1), 0, 0));
 }

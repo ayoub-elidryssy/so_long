@@ -1,4 +1,4 @@
-OBJ = mandatory/mand_so_long.o touls.o split.o check_map1.o get_next_line.o get_next_line_utils.o\
+OBJ = mandatory/mand_so_long.o touls.o split.o mandatory/check_map1.o get_next_line.o get_next_line_utils.o\
 mandatory/check_map2.o mandatory/imge_to_win.o mandatory/imge_touls.o\
 
 BONUS_OBJ = so_long.o touls.o split.o check_map1.o get_next_line.o get_next_line_utils.o check_map2.o\

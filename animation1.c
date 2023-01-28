@@ -6,7 +6,7 @@
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 06:50:52 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/26 10:34:52 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/28 10:28:36 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,29 @@ void	anim_of_sheep(t_gam *gam, int x, int y)
 	gam->n++;
 }
 
+int	sw_enmy(t_gam *gam, int a, int b, int c)
+{
+	sw1_img(gam, a, b);
+	return (c);
+}
+
 void	enmy_movs(t_gam *gam, int x, int y, int c)
 {
-	if ((gam->map[y][x + 1] == '0' || gam->map[y][x + 1] == 'P') && c < 3)
-	{
-		c = gam->map[y][x + 1];
-		sw1_img(gam, 'R', 'A');
-	}
+	if ((gam->map[y][x + 1] == '0' || gam->map[y][x + 1] == 'P') && c < 3
+		&& (gam->map[y - 1][x + 1] == '0' || gam->map[y - 1][x + 1] == 'P'
+		|| gam->map[y + 1][x + 1] == '0' || gam->map[y + 1][x + 1] == 'P'))
+		c = sw_enmy(gam, 'R', 'A', gam->map[y][x + 1]);
 	else if ((gam->map[y + 1][x] == '0' || gam->map[y + 1][x] == 'P')
-		&& c < 6 && c > 2)
-	{
-		c = gam->map[y + 1][x];
-		sw1_img(gam, 'D', 'A');
-	}
-	else if ((gam->map[y][x - 1] == '0' || gam->map[y][x - 1] == 'P')
-		&& c < 9 && c > 5)
-	{
-		c = gam->map[y][x - 1];
-		sw1_img(gam, 'L', 'A');
-	}
-	else if ((gam->map[y - 1][x] == '0' || gam->map[y - 1][x] == 'P') && c > 8)
-	{
-		c = gam->map[y - 1][x];
-		sw1_img(gam, 'U', 'A');
-	}
+		&& c < 6 && c > 2 && (gam->map[y + 1][x + 1] != '1'
+		|| gam->map[y + 1][x - 1] != '1'))
+		c = sw_enmy(gam, 'D', 'A', gam->map[y + 1][x]);
+	else if ((gam->map[y][x - 1] == '0' || gam->map[y][x - 1] == 'P') && c < 9
+		&& c > 5 && (gam->map[y - 1][x - 1] != '1'
+		|| gam->map[y + 1][x - 1] != '1'))
+		c = sw_enmy(gam, 'L', 'A', gam->map[y][x - 1]);
+	else if ((gam->map[y - 1][x] == '0' || gam->map[y - 1][x] == 'P') && c > 8
+		&& (gam->map[y - 1][x + 1] != '1' || gam->map[y - 1][x - 1] != '1'))
+		c = sw_enmy(gam, 'U', 'A', gam->map[y - 1][x]);
 	if (c == 'P')
 		print_str("YOU LOST\n");
 }

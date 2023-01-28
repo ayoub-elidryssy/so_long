@@ -6,57 +6,79 @@
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:34:10 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/26 07:42:57 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/28 09:55:58 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	flod_fill(char **map, int x, int y, int n)
+void	flod_fill(char **map1, int x, int y, int n)
 {
-	if (!map)
+	if (!map1)
 		return ;
-	if (map[x][y] != 'P')
-		map[x][y] = '2';
-	if (map[x][y + 1] == 'C' || map[x][y + 1] == '0')
-		flod_fill(map, x, y + 1, n);
-	if (map[x + 1][y] == 'C' || map[x + 1][y] == '0')
-		flod_fill(map, x + 1, y, n);
-	if (x > 0 && (map[x - 1][y] == 'C' || map[x - 1][y] == '0'))
-		flod_fill(map, x - 1, y, n);
-	if (y > 0 && (map[x][y - 1] == 'C' || map[x][y - 1] == '0'))
-		flod_fill(map, x, y - 1, n);
+	if (map1[x][y] != 'P')
+		map1[x][y] = '2';
+	if (map1[x][y + 1] == 'C' || map1[x][y + 1] == '0')
+		flod_fill(map1, x, y + 1, n);
+	if (map1[x + 1][y] == 'C' || map1[x + 1][y] == '0')
+		flod_fill(map1, x + 1, y, n);
+	if (x > 0 && (map1[x - 1][y] == 'C' || map1[x - 1][y] == '0'))
+		flod_fill(map1, x - 1, y, n);
+	if (y > 0 && (map1[x][y - 1] == 'C' || map1[x][y - 1] == '0'))
+		flod_fill(map1, x, y - 1, n);
 }
 
-int	valid_path(t_gam *gam, int n)
+int	valid_path(t_gam *gam, int x, int y, int n)
 {
-	int	x;
-	int	y;
-
-	if (!a_sersh(gam->map, 'P', &x, &y))
+	if (!a_sersh(gam->map1, 'P', &x, &y))
 		print_error(-1);
-	flod_fill(gam->map, x, y, n);
-	y = a_sersh_n(gam->map, 'C');
-	x = 0;
-	while (gam->map[x])
-		free(gam->map[x++]);
-	free(gam->map);
-	if (y != 0)
+	flod_fill(gam->map1, x, y, n);
+	a_sersh(gam->map1, 'E', &x, &y);
+	if (gam->map1[x + 1][y] != '2' && gam->map1[x][y + 1] != '2'
+		&& gam->map1[x - 1][y] != '2' && gam->map1[x][y - 1] != '2')
 		return (-5);
+	if (a_sersh_n(gam->map1, 'C'))
+		return (-5);
+	return (check_enmy(gam, 0, 0));
+}
+
+int	check_enmy(t_gam *gam, int x, int y)
+{
+	while (gam->map1 && gam->map1[y])
+	{
+		x = 0;
+		while (gam->map1[y][x])
+		{
+			if ((gam->map1[y][x] == 'A' && (gam->map1[y][x + 1] == '1'
+				|| gam->map1[y][x + 1] == 'E') && (gam->map1[y][x - 1] == '1'
+				|| gam->map1[y][x - 1] == 'E')) || (gam->map1[y][x] == 'A'
+				&& (gam->map1[y + 1][x] == '1' || gam->map1[y + 1][x] == 'E')
+				&& (gam->map1[y - 1][x] == '1' || gam->map1[y - 1][x] == 'E')))
+				return (5);
+			if ((gam->map1[y][x] == 'A' && (gam->map1[y][x + 1] == '1'
+				|| gam->map1[y][x + 1] == 'E') && (gam->map1[y][x - 1] == '1'
+				|| gam->map1[y][x - 1] == 'E')) || (gam->map1[y][x] == 'A'
+				&& (gam->map1[y + 1][x] == '1' || gam->map1[y + 1][x] == 'E')
+				&& (gam->map1[y - 1][x] == '1' || gam->map1[y - 1][x] == 'E')))
+				return (5);
+			x++;
+		}
+		y++;
+	}
 	return (1);
 }
 
 int	check_characters(t_gam *gam, int x, int y)
 {
 	y = -1;
-	while (gam->map[++y])
+	while (gam->map1[++y])
 	{
 		x = -1;
-		while (gam->map[y][++x])
+		while (gam->map1[y][++x])
 		{
-			if (gam->map[y][x] != '0' && gam->map[y][x] != '1'
-				&& gam->map[y][x] != 'C' && gam->map[y][x] != 'E'
-				&& gam->map[y][x] != 'P' && gam->map[y][x] != 'A')
+			if (gam->map1[y][x] != '0' && gam->map1[y][x] != '1'
+				&& gam->map1[y][x] != 'C' && gam->map1[y][x] != 'E'
+				&& gam->map1[y][x] != 'P' && gam->map1[y][x] != 'A')
 				return (0);
 		}
 	}
