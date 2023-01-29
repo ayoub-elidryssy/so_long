@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   animation1.c                                       :+:      :+:    :+:   */
+/*   b_animation1_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 06:50:52 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/28 10:28:36 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/29 08:48:33 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "b_so_long_bonus.h"
 
 void	anim_of_sheep(t_gam *gam, int x, int y)
 {
@@ -41,7 +41,7 @@ int	sw_enmy(t_gam *gam, int a, int b, int c)
 	return (c);
 }
 
-void	enmy_movs(t_gam *gam, int x, int y, int c)
+void	enemy_movs(t_gam *gam, int x, int y, int c)
 {
 	if ((gam->map[y][x + 1] == '0' || gam->map[y][x + 1] == 'P') && c < 3
 		&& (gam->map[y - 1][x + 1] == '0' || gam->map[y - 1][x + 1] == 'P'
@@ -91,7 +91,7 @@ int	a_animation(t_gam *gam)
 		gam->a->d = (rand() % 12);
 		anim_of_enemy(gam, gam->a->x * 70, gam->a->y * 70, gam->n_c);
 		if (gam->n_c == 12000)
-			enmy_movs(gam, gam->a->x, gam->a->y, gam->a->d);
+			enemy_movs(gam, gam->a->x, gam->a->y, gam->a->d);
 		gam->a = gam->a->next;
 	}
 	gam->a = tmp;

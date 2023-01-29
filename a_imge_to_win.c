@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   imge_to_win.c                                      :+:      :+:    :+:   */
+/*   a_imge_to_win.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:45:55 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/27 10:06:11 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/29 08:49:40 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "a_so_long.h"
 
 int	put_p(t_gam *gam, int x, int y, int k)
 {
@@ -37,15 +37,8 @@ int	put_p(t_gam *gam, int x, int y, int k)
 
 int	put_img(t_gam *gam, int x, int y, int k)
 {
-	if (k == 'A')
-	{
-		mlx_put_image_to_window(gam->mlx, gam->win, gam->img.n, x, y);
-		mlx_put_image_to_window(gam->mlx, gam->win, gam->img.a1, x, y);
-	}
 	if (k == 'C')
 		mlx_put_image_to_window(gam->mlx, gam->win, gam->img.c1, x, y);
-	if (k == 'c')
-		mlx_put_image_to_window(gam->mlx, gam->win, gam->img.c2, x, y);
 	if (k == '1')
 		mlx_put_image_to_window(gam->mlx, gam->win, gam->img.w, x, y);
 	if (k == '0')
@@ -59,45 +52,24 @@ int	put_img(t_gam *gam, int x, int y, int k)
 
 void	sw1_img(t_gam *gam, int k, int c)
 {
-	if (c == 'P')
-	{
-		gam->map[gam->p.y][gam->p.x] = '0';
-		if (k == 'L')
-			put_img(gam, (gam->p.x--) * 70, gam->p.y * 70, '0');
-		if (k == 'R')
-			put_img(gam, (gam->p.x++) * 70, gam->p.y * 70, '0');
-		if (k == 'D')
-			put_img(gam, gam->p.x * 70, (gam->p.y++) * 70, '0');
-		if (k == 'U')
-			put_img(gam, gam->p.x * 70, (gam->p.y--) * 70, '0');
-		gam->map[gam->p.y][gam->p.x] = c;
-		put_p(gam, gam->p.x * 70, gam->p.y * 70, k);
-		return ;
-	}
-	gam->map[gam->a->y][gam->a->x] = '0';
+	gam->map[gam->p.y][gam->p.x] = '0';
 	if (k == 'L')
-		put_img(gam, (gam->a->x--) * 70, gam->a->y * 70, '0');
+		put_img(gam, (gam->p.x--) * 70, gam->p.y * 70, '0');
 	if (k == 'R')
-		put_img(gam, (gam->a->x++) * 70, gam->a->y * 70, '0');
+		put_img(gam, (gam->p.x++) * 70, gam->p.y * 70, '0');
 	if (k == 'D')
-		put_img(gam, gam->a->x * 70, (gam->a->y++) * 70, '0');
+		put_img(gam, gam->p.x * 70, (gam->p.y++) * 70, '0');
 	if (k == 'U')
-		put_img(gam, gam->a->x * 70, (gam->a->y--) * 70, '0');
-	gam->map[gam->a->y][gam->a->x] = c;
+		put_img(gam, gam->p.x * 70, (gam->p.y--) * 70, '0');
+	gam->map[gam->p.y][gam->p.x] = c;
+	put_p(gam, gam->p.x * 70, gam->p.y * 70, k);
 }
 
 void	plyr_movs(t_gam *gam, int x, int y, int s)
 {
-	char	p[12];
-
-	ft_itoa(++gam->movs, p);
-	mlx_put_image_to_window(gam->mlx, gam->win, gam->img.w, 0, 0);
-	mlx_put_image_to_window(gam->mlx, gam->win, gam->img.w, 0, 1);
-	mlx_string_put(gam->mlx, gam->win, 0, 0, 0x800000, p);
+	print_numbr(++gam->movs, gam->movs);
 	if (gam->map[y][x] == 'e')
 		print_str("YOU WIN\n");
-	if (gam->map[y][x] == 'A')
-		print_str("YOU LOST\n");
 	if (s == 0 || s == 1)
 	{
 		if (gam->b[s] == 3)
@@ -138,5 +110,5 @@ int	a_event(int k, t_gam *gam)
 		gam->map[gam->m_y][gam->m_x] = 'e';
 		put_img(gam, gam->m_x * 70, gam->m_y * 70, 'e');
 	}
-	return (k);
+	return (0);
 }

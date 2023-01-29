@@ -6,11 +6,11 @@
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:53:36 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/27 09:07:24 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/29 08:53:38 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "a_so_long.h"
 
 static	int	a_strnum(char const *s, char c)
 {

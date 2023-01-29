@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   b_so_long_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelidrys <aelidrys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 15:42:55 by aelidrys          #+#    #+#             */
-/*   Updated: 2023/01/28 08:10:52 by aelidrys         ###   ########.fr       */
+/*   Updated: 2023/01/29 08:48:28 by aelidrys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "b_so_long_bonus.h"
 
 void	std_gam(t_gam *gam)
 {
@@ -74,7 +74,7 @@ int	main(int a, char **av)
 	std_gam(&gam);
 	enmy_pos(&gam, 0, 0);
 	mlx_loop_hook(gam.mlx, a_animation, &gam);
-	mlx_hook(gam.win, 2, 0, a_event, &gam);
+	mlx_hook(gam.win, 2, 40, a_event, &gam);
 	mlx_hook(gam.win, 17, 0, ft_exit, 0);
 	mlx_loop(gam.mlx);
 }
